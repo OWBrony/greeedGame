@@ -63,3 +63,4 @@ class ColorDefs:
     TURQUOISE = Color(64,224,208)
     ZIRCON = Color(95,158,160)
     ROSEQUARTZ = Color(255,182,193)
+    SLATE = Color(112,128,144)
