@@ -1,3 +1,5 @@
+from global_defs import GlobalDefs
+from game.casting.cast import Cast
 from game.casting.actor import Actor
 
 from game.shared.color import ColorDefs
@@ -8,11 +10,12 @@ class Gem(Actor):
         self._name = name
         self._value = value
         self._text = text
+        self._font_size = GlobalDefs.FONT_SIZE
         self._color = color
 
-    # Stub, can be overridden by subclasses.
     def on_collect(self, cast):
-        pass
+        robot = cast.get_first_actor("robot")
+        # TODO: Add value of gem to robot's score.
 
     # Stub, can be overridden by subclasses.
     def on_update(self, cast):

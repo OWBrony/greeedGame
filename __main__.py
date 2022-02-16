@@ -1,5 +1,7 @@
+from global_defs import GlobalDefs
 from game.casting.actor import Actor
 from game.casting.cast import Cast
+from game.casting.robot import Robot
 
 from game.directing.director import Director
 
@@ -10,20 +12,6 @@ from game.shared.color import Color
 from game.shared.color import ColorDefs
 from game.shared.point import Point
 
-
-FRAME_RATE = 12
-MAX_X = 900
-MAX_Y = 600
-CELL_SIZE = 15
-FONT_SIZE = 15
-COLS = 60
-ROWS = 40
-SCORE_Y = int((ROWS - 2) * CELL_SIZE)
-GROUND_Y = int((ROWS - 4) * CELL_SIZE)
-GROUND_CHARS = 106
-CAPTION = "Greeed!!"
-
-
 def main():
     
     # create the cast
@@ -32,33 +20,26 @@ def main():
     # create score
     score = Actor()
     score.set_text("")
-    score.set_font_size(FONT_SIZE)
+    score.set_font_size(GlobalDefs.FONT_SIZE)
     score.set_color(ColorDefs.WHITE)
-    score.set_position(Point(CELL_SIZE, SCORE_Y))
+    score.set_position(Point(GlobalDefs.CELL_SIZE, GlobalDefs.SCORE_Y))
     cast.add_actor("score", score)
 
     # create "ground"
     ground = Actor()
-    ground.set_text("_" * GROUND_CHARS)
+    ground.set_text("_" * GlobalDefs.GROUND_CHARS)
     ground.set_color(ColorDefs.WHITE)
-    ground.set_position(Point(0, GROUND_Y))
+    ground.set_position(Point(0, GlobalDefs.GROUND_Y))
     cast.add_actor("ground", ground)
     
     # create the robot
-    x = int(MAX_X / 2)
-    y = GROUND_Y
-    position = Point(x, y)
-
-    robot = Actor()
-    robot.set_text("#")
-    robot.set_font_size(FONT_SIZE)
-    robot.set_color(ColorDefs.WHITE)
-    robot.set_position(position)
+    robot = Robot()
     cast.add_actor("robot", robot)
     
     # start the game
-    keyboard_service = KeyboardService(CELL_SIZE)
-    video_service = VideoService(CAPTION, MAX_X, MAX_Y, CELL_SIZE, FRAME_RATE)
+    keyboard_service = KeyboardService(GlobalDefs.CELL_SIZE)
+    video_service = VideoService(GlobalDefs.CAPTION, GlobalDefs.MAX_X, 
+        GlobalDefs.MAX_Y, GlobalDefs.CELL_SIZE, GlobalDefs.FRAME_RATE)
     director = Director(keyboard_service, video_service)
     director.start_game(cast)
 
