@@ -37,7 +37,7 @@ class Director:
         Args:
             cast (Cast): The cast of actors.
         """
-        robot = cast.get_first_actor("robots")
+        robot = cast.get_first_actor("robot")
         velocity = self._keyboard_service.get_direction()
         robot.set_velocity(velocity)        
 
@@ -47,19 +47,13 @@ class Director:
         Args:
             cast (Cast): The cast of actors.
         """
-        banner = cast.get_first_actor("banners")
-        robot = cast.get_first_actor("robots")
-        artifacts = cast.get_actors("artifacts")
+        score = cast.get_first_actor("score")
+        robot = cast.get_first_actor("robot")
 
-        banner.set_text("")
+        score.set_text("$1337") # Placeholder
         max_x = self._video_service.get_width()
         max_y = self._video_service.get_height()
-        robot.move_next(max_x, max_y)
-        
-        for artifact in artifacts:
-            if robot.get_position().equals(artifact.get_position()):
-                message = artifact.get_message()
-                banner.set_text(message)    
+        robot.move_next(max_x, max_y)  
         
     def _do_outputs(self, cast):
         """Draws the actors on the screen.

@@ -1,8 +1,4 @@
-import os
-import random
-
 from game.casting.actor import Actor
-from game.casting.gem import Gem
 from game.casting.cast import Cast
 
 from game.directing.director import Director
@@ -21,9 +17,11 @@ CELL_SIZE = 15
 FONT_SIZE = 15
 COLS = 60
 ROWS = 40
+SCORE_Y = int((ROWS - 2) * CELL_SIZE)
+GROUND_Y = int((ROWS - 4) * CELL_SIZE)
+GROUND_CHARS = 106
 CAPTION = "Greeed!!"
 WHITE = Color(255, 255, 255)
-DEFAULT_ARTIFACTS = 40
 
 
 def main():
@@ -31,17 +29,24 @@ def main():
     # create the cast
     cast = Cast()
     
-    # create the banner
-    banner = Actor()
-    banner.set_text("")
-    banner.set_font_size(FONT_SIZE)
-    banner.set_color(WHITE)
-    banner.set_position(Point(CELL_SIZE, 0))
-    cast.add_actor("banners", banner)
+    # create score
+    score = Actor()
+    score.set_text("")
+    score.set_font_size(FONT_SIZE)
+    score.set_color(WHITE)
+    score.set_position(Point(CELL_SIZE, SCORE_Y))
+    cast.add_actor("score", score)
+
+    # create "ground"
+    ground = Actor()
+    ground.set_text("_" * GROUND_CHARS)
+    ground.set_color(WHITE)
+    ground.set_position(Point(0, GROUND_Y))
+    cast.add_actor("ground", ground)
     
     # create the robot
     x = int(MAX_X / 2)
-    y = int(MAX_Y / 2)
+    y = GROUND_Y
     position = Point(x, y)
 
     robot = Actor()
@@ -49,7 +54,7 @@ def main():
     robot.set_font_size(FONT_SIZE)
     robot.set_color(WHITE)
     robot.set_position(position)
-    cast.add_actor("robots", robot)
+    cast.add_actor("robot", robot)
     
     # start the game
     keyboard_service = KeyboardService(CELL_SIZE)
