@@ -45,3 +45,21 @@ class KeyboardService:
         direction = direction.scale(self._cell_size)
         
         return direction
+
+    def get_direction_horizontal(self):
+        """Gets the selected direction based on the currently pressed keys, ignoring any vertical input.
+
+        Returns:
+            Point: The selected direction.
+        """
+        direction = self.get_direction()
+        return Point(direction.get_x(), 0)
+
+    def get_direction_vertical(self):
+        """Gets the selected direction based on the currently pressed keys, ignoring any horizontal input.
+
+        Returns:
+            Point: The selected direction.
+        """
+        direction = self.get_direction()
+        return Point(0, direction.get_y())

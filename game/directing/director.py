@@ -38,7 +38,7 @@ class Director:
             cast (Cast): The cast of actors.
         """
         robot = cast.get_first_actor("robot")
-        velocity = self._keyboard_service.get_direction()
+        velocity = self._keyboard_service.get_direction_horizontal()
         robot.set_velocity(velocity)        
 
     def _do_updates(self, cast):
