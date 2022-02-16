@@ -14,3 +14,5 @@ Get the banner to display your score.
 Add class to generate the new rocks and gems.
 
 (maybe robot class)
+
+Opal could be the most valuable gem because multicolored? We could look into having it change colors as it falls.
