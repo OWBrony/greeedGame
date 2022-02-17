@@ -26,6 +26,14 @@ def main():
     score.set_position(Point(GlobalDefs.CELL_SIZE, GlobalDefs.SCORE_Y))
     cast.add_actor("score", score)
 
+    # create message
+    message = Actor()
+    message.set_text("")
+    message.set_font_size(GlobalDefs.FONT_SIZE)
+    message.set_color(ColorDefs.WHITE)
+    message.set_position(Point(int(GlobalDefs.CELL_SIZE * (GlobalDefs.COLS / 3)), GlobalDefs.SCORE_Y))
+    cast.add_actor("message", message)
+
     # create "ground"
     ground = Actor()
     ground.set_text("_" * (GlobalDefs.COLS + 2))

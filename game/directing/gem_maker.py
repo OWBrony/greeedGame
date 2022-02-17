@@ -3,13 +3,14 @@ from copy import copy
 
 from global_defs import GlobalDefs
 
-from game.casting.gem import GemDefs
+from game.casting.gem import Gem, GemDefs
 from game.shared.point import Point
 
 class GemMaker:
     GEMS = [GemDefs.SILVER, GemDefs.GOLD, GemDefs.CORAL, GemDefs.ROSEQUARTZ, GemDefs.AQUAMARINE,
             GemDefs.GARNET, GemDefs.PERIDOT, GemDefs.ZIRCON, GemDefs.CITRINE, GemDefs.AMETHYST,
-            GemDefs.TOPAZ, GemDefs.SAPPHIRE, GemDefs.RUBY, GemDefs.EMERALD, GemDefs.DIAMOND]
+            GemDefs.TOPAZ, GemDefs.SAPPHIRE, GemDefs.RUBY, GemDefs.EMERALD, GemDefs.DIAMOND,
+            GemDefs.PEBBLE, GemDefs.GRAVEL, GemDefs.ROCK, GemDefs.BOULDER]
 
     TIMER_MIN = 2
     TIMER_MAX = 5

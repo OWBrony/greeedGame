@@ -17,7 +17,14 @@ class Gem(Actor):
 
     def _gem_collected(self, cast):
         robot = cast.get_first_actor("robot")
+        message = cast.get_first_actor("message")
         robot.add_money(self._value)
+        if self._value >= 0:
+            message.set_color(ColorDefs.WHITE)
+            message.set_text(f"Found {self._name}! (${self._value})")
+        else:
+            message.set_color(ColorDefs.RED)
+            message.set_text(f"Hit by {self._name}! Ouch! (${self._value})")
 
     def on_update(self, cast):
         robot = cast.get_first_actor("robot")
@@ -36,7 +43,7 @@ class Gem(Actor):
         self._velocity = Point(0, abs(speed))
 
     def _check_robot_touching(self, robot):
-        return abs(self._position.get_x() - robot.get_position().get_x()) <= GlobalDefs.CELL_SIZE * 1.5
+        return abs(self._position.get_x() - (robot.get_position().get_x() + GlobalDefs.CELL_SIZE)) <= GlobalDefs.CELL_SIZE * 2
 
 class GemDefs:
     # Treasure

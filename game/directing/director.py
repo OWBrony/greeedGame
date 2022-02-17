@@ -1,3 +1,6 @@
+from game.shared.color import ColorDefs
+
+
 class Director:
     """A person who directs the game. 
     
@@ -62,6 +65,10 @@ class Director:
             gem.on_update(cast)
 
         score.set_text(f"${robot.get_money()}")
+        if robot.get_money() >= 0:
+            score.set_color(ColorDefs.WHITE)
+        else:
+            score.set_color(ColorDefs.RED)
         
     def _do_outputs(self, cast):
         """Draws the actors on the screen.
