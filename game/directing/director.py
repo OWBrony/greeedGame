@@ -47,13 +47,18 @@ class Director:
         Args:
             cast (Cast): The cast of actors.
         """
+        max_x = self._video_service.get_width()
+        max_y = self._video_service.get_height()
+
         score = cast.get_first_actor("score")
         robot = cast.get_first_actor("robot")
 
-        score.set_text("$1337") # Placeholder
-        max_x = self._video_service.get_width()
-        max_y = self._video_service.get_height()
         robot.move_next(max_x, max_y)  
+        for gem in cast.get_actors("gems"):
+            gem.move_next(max_x, max_y)
+            gem.on_update(cast)
+
+        score.set_text(f"${robot.get_money()}")
         
     def _do_outputs(self, cast):
         """Draws the actors on the screen.

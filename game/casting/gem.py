@@ -1,6 +1,7 @@
 from global_defs import GlobalDefs
 from game.casting.cast import Cast
 from game.casting.actor import Actor
+from game.shared.point import Point
 
 from game.shared.color import ColorDefs
 
@@ -12,20 +13,27 @@ class Gem(Actor):
         self._text = text
         self._font_size = GlobalDefs.FONT_SIZE
         self._color = color
+        self._velocity = Point(0, 5)
 
     def on_collect(self, cast):
         robot = cast.get_first_actor("robot")
-        # TODO: Add value of gem to robot's score.
+        robot.add_money(self._value)
 
-    # Stub, can be overridden by subclasses.
     def on_update(self, cast):
-        pass
+        robot = cast.get_first_actor("robot")
+        if self._position.get_y() >= GlobalDefs.GROUND_Y:
+            if self._check_robot_touching(robot):
+                self.on_collect(cast)
+            cast.remove_actor("gems", self)
     
     def get_name(self):
         return self._name
 
     def get_value(self):
         return self._value
+
+    def _check_robot_touching(self, robot):
+        return abs(self._position.get_x() - robot.get_position().get_x()) <= 5
 
 class GemDefs:
     # Treasure

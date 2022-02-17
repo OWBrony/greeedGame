@@ -1,3 +1,4 @@
+from game.casting.gem import GemDefs
 from global_defs import GlobalDefs
 from game.casting.actor import Actor
 from game.casting.cast import Cast
@@ -8,9 +9,10 @@ from game.directing.director import Director
 from game.services.keyboard_service import KeyboardService
 from game.services.video_service import VideoService
 
-from game.shared.color import Color
 from game.shared.color import ColorDefs
 from game.shared.point import Point
+
+from copy import copy
 
 def main():
     
@@ -35,6 +37,10 @@ def main():
     # create the robot
     robot = Robot()
     cast.add_actor("robot", robot)
+    
+    # test gem creation
+    gem = copy(GemDefs.AMETHYST)
+    cast.add_actor("gems", gem)
     
     # start the game
     keyboard_service = KeyboardService(GlobalDefs.CELL_SIZE)
