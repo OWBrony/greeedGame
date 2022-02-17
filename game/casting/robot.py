@@ -9,7 +9,7 @@ class Robot(Actor):
     def __init__(self):
         super().__init__()
         self._text = "#"
-        self._font_size = GlobalDefs.FONT_SIZE
+        self._font_size = GlobalDefs.FONT_SIZE * 2
         self._color = ColorDefs.WHITE
         x = int(GlobalDefs.MAX_X / 2)
         y = GlobalDefs.GROUND_Y

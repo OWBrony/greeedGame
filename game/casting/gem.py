@@ -15,7 +15,7 @@ class Gem(Actor):
         self._color = color
         self._velocity = Point(0, 5)
 
-    def on_collect(self, cast):
+    def _gem_collected(self, cast):
         robot = cast.get_first_actor("robot")
         robot.add_money(self._value)
 
@@ -23,7 +23,7 @@ class Gem(Actor):
         robot = cast.get_first_actor("robot")
         if self._position.get_y() >= GlobalDefs.GROUND_Y:
             if self._check_robot_touching(robot):
-                self.on_collect(cast)
+                self._gem_collected(cast)
             cast.remove_actor("gems", self)
     
     def get_name(self):
@@ -32,8 +32,11 @@ class Gem(Actor):
     def get_value(self):
         return self._value
 
+    def set_fall_speed(self, speed):
+        self._velocity = Point(0, abs(speed))
+
     def _check_robot_touching(self, robot):
-        return abs(self._position.get_x() - robot.get_position().get_x()) <= 5
+        return abs(self._position.get_x() - robot.get_position().get_x()) <= GlobalDefs.CELL_SIZE * 1.5
 
 class GemDefs:
     # Treasure

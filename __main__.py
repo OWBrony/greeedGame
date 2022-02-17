@@ -1,18 +1,17 @@
-from game.casting.gem import GemDefs
 from global_defs import GlobalDefs
+
 from game.casting.actor import Actor
 from game.casting.cast import Cast
 from game.casting.robot import Robot
 
 from game.directing.director import Director
+from game.directing.gem_maker import GemMaker
 
 from game.services.keyboard_service import KeyboardService
 from game.services.video_service import VideoService
 
 from game.shared.color import ColorDefs
 from game.shared.point import Point
-
-from copy import copy
 
 def main():
     
@@ -29,7 +28,8 @@ def main():
 
     # create "ground"
     ground = Actor()
-    ground.set_text("_" * GlobalDefs.GROUND_CHARS)
+    ground.set_text("_" * (GlobalDefs.COLS + 2))
+    ground.set_font_size(GlobalDefs.GROUND_FONT_SIZE)
     ground.set_color(ColorDefs.WHITE)
     ground.set_position(Point(0, GlobalDefs.GROUND_Y))
     cast.add_actor("ground", ground)
@@ -38,15 +38,12 @@ def main():
     robot = Robot()
     cast.add_actor("robot", robot)
     
-    # test gem creation
-    gem = copy(GemDefs.AMETHYST)
-    cast.add_actor("gems", gem)
-    
     # start the game
     keyboard_service = KeyboardService(GlobalDefs.CELL_SIZE)
     video_service = VideoService(GlobalDefs.CAPTION, GlobalDefs.MAX_X, 
         GlobalDefs.MAX_Y, GlobalDefs.CELL_SIZE, GlobalDefs.FRAME_RATE)
-    director = Director(keyboard_service, video_service)
+    gem_maker = GemMaker()
+    director = Director(keyboard_service, video_service, gem_maker)
     director.start_game(cast)
 
 

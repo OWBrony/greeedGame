@@ -8,7 +8,7 @@ class Director:
         _video_service (VideoService): For providing video output.
     """
 
-    def __init__(self, keyboard_service, video_service):
+    def __init__(self, keyboard_service, video_service, gem_maker):
         """Constructs a new Director using the specified keyboard and video services.
         
         Args:
@@ -17,6 +17,7 @@ class Director:
         """
         self._keyboard_service = keyboard_service
         self._video_service = video_service
+        self._gem_maker = gem_maker
         
     def start_game(self, cast):
         """Starts the game using the given cast. Runs the main game loop.
@@ -49,6 +50,8 @@ class Director:
         """
         max_x = self._video_service.get_width()
         max_y = self._video_service.get_height()
+
+        self._gem_maker.on_update(cast)
 
         score = cast.get_first_actor("score")
         robot = cast.get_first_actor("robot")
