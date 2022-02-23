@@ -10,11 +10,11 @@ class GemMaker:
     GEMS    =   [GemDefs.SILVER, GemDefs.GOLD, GemDefs.CORAL, GemDefs.ROSEQUARTZ, GemDefs.AQUAMARINE,
                 GemDefs.GARNET, GemDefs.PERIDOT, GemDefs.ZIRCON, GemDefs.CITRINE, GemDefs.AMETHYST,
                 GemDefs.TOPAZ, GemDefs.SAPPHIRE, GemDefs.RUBY, GemDefs.EMERALD, GemDefs.DIAMOND,
-                GemDefs.PEBBLE, GemDefs.GRAVEL, GemDefs.ROCK, GemDefs.BOULDER]
+                GemDefs.OPAL, GemDefs.OBSIDIAN, GemDefs.PEBBLE, GemDefs.GRAVEL, GemDefs.ROCK, GemDefs.BOULDER]
     WEIGHTS =   [10, 7.5, 7.5, 7.5, 5, 
                 5, 5, 3.5, 3.5, 3.5,
                 3, 3, 3, 3, 2.5,
-                25, 17.5, 12.5, 5]
+                2.5, 2, 25, 20, 15, 10]
 
     TIMER_MIN = 2
     TIMER_MAX = 5

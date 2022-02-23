@@ -60,7 +60,6 @@ class ColorDefs:
     AQUAMARINE = Color(127,255,212)
     TOPAZ = Color(244,164,96)
     AMETHYST = Color(75,0,130)
-    TURQUOISE = Color(64,224,208)
     ZIRCON = Color(95,158,160)
     ROSEQUARTZ = Color(255,182,193)
     SLATE = Color(112,128,144)

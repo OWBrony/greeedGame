@@ -1,3 +1,5 @@
+import random
+
 from global_defs import GlobalDefs
 from game.casting.cast import Cast
 from game.casting.actor import Actor
@@ -45,6 +47,48 @@ class Gem(Actor):
     def _check_robot_touching(self, robot):
         return abs(self._position.get_x() - (robot.get_position().get_x() + GlobalDefs.CELL_SIZE)) <= GlobalDefs.CELL_SIZE * 2
 
+class Opal(Gem):
+    COLOR_TIMER = 5
+    COLORS =    [ColorDefs.WHITE, ColorDefs.RED, ColorDefs.LIME, ColorDefs.YELLOW, ColorDefs.CYAN, 
+                ColorDefs.TEAL, ColorDefs.ORANGE, ColorDefs.CORAL, ColorDefs.PERIDOT, ColorDefs.AQUAMARINE, 
+                ColorDefs.MAGENTA, ColorDefs.TOPAZ, ColorDefs.ROSEQUARTZ]
+
+    def __init__(self):
+        super().__init__("Opal", "*", ColorDefs.WHITE, 25000)
+        self._timer = Opal.COLOR_TIMER
+
+    def on_update(self, cast):
+        super().on_update(cast)
+        self._timer -= 1
+        if self._timer > 0:
+            return
+        # Change to random color and reset timer
+        self._color = random.choice(Opal.COLORS)
+        self._timer = Opal.COLOR_TIMER
+
+class Obsidian(Gem):
+    COLORS       = [ColorDefs.PURPLE, ColorDefs.GREY, ColorDefs.BLACK]
+    COLOR_FRAMES = [20, 10]
+
+    def __init__(self):
+        super().__init__("Obsidian", "*", Obsidian.COLORS[0], 50000)
+        self._timer = Obsidian.COLOR_FRAMES[0]
+        self._timer_stage = 0
+    
+    def on_update(self, cast):
+        super().on_update(cast)
+        # If we're already on the last color stage, do nothing
+        if self._timer_stage >= len(Obsidian.COLOR_FRAMES):
+            return
+        self._timer -= 1
+        if self._timer > 0:
+            return
+        # Advance to the next color stage and reset timer if able
+        self._timer_stage += 1
+        self._color = Obsidian.COLORS[self._timer_stage]
+        if self._timer_stage < len(Obsidian.COLOR_FRAMES):
+            self._timer = Obsidian.COLOR_FRAMES[self._timer_stage]
+
 class GemDefs:
     # Treasure
     SILVER = Gem("Silver", "*", ColorDefs.SILVER, 500)
@@ -62,10 +106,10 @@ class GemDefs:
     RUBY = Gem("Ruby", "*", ColorDefs.RED, 7500)
     EMERALD = Gem("Emerald", "*", ColorDefs.LIME, 8250)
     DIAMOND = Gem("Diamond", "*", ColorDefs.WHITE, 10000)
-    # TODO Opal - Multicolored supervaluable gem. Needs its own class to override on_update.
+    OPAL = Opal()
+    OBSIDIAN = Obsidian()
     # Hazards
     PEBBLE = Gem("Pebble", "o", ColorDefs.GREY, -5000)
     GRAVEL = Gem("Gravel", "o", ColorDefs.SLATE, -10000)
     ROCK = Gem("Rock", "O", ColorDefs.GREY, -20000)
     BOULDER = Gem("Boulder", "O", ColorDefs.SLATE, -50000)
-    # TODO: Powerups?
