@@ -64,8 +64,8 @@ class GemDefs:
     DIAMOND = Gem("Diamond", "*", ColorDefs.WHITE, 10000)
     # TODO Opal - Multicolored supervaluable gem. Needs its own class to override on_update.
     # Hazards
-    PEBBLE = Gem("Pebble", "o", ColorDefs.GREY, -2000)
-    GRAVEL = Gem("Gravel", "o", ColorDefs.SLATE, -3500)
-    ROCK = Gem("Rock", "O", ColorDefs.GREY, -5000)
-    BOULDER = Gem("Boulder", "O", ColorDefs.SLATE, -10000)
+    PEBBLE = Gem("Pebble", "o", ColorDefs.GREY, -5000)
+    GRAVEL = Gem("Gravel", "o", ColorDefs.SLATE, -10000)
+    ROCK = Gem("Rock", "O", ColorDefs.GREY, -20000)
+    BOULDER = Gem("Boulder", "O", ColorDefs.SLATE, -50000)
     # TODO: Powerups?
