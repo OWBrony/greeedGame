@@ -8,7 +8,17 @@ from game.shared.point import Point
 from game.shared.color import ColorDefs
 
 class Gem(Actor):
+    """An Actor that falls from the top of the screen to be collected by the player.
+
+    The Gem types used in-game are defined in the GemDefs class, and creation during gameplay is managed by GemMaker.
+    Initialization of a Gem outside of these two contexts is discouraged.
+
+    Attributes:
+        _name: User-friendly name representing the name of the created Gem. (e.g. "Diamond")
+        _value: Monetary value when the gem is collected by the robot. Can be negative (for stage hazards).
+    """    
     def __init__(self, name, text, color, value):
+        """Constructs a new Gem."""
         super().__init__()
         self._name = name
         self._value = value
@@ -18,6 +28,13 @@ class Gem(Actor):
         self._velocity = Point(0, 5)
 
     def _gem_collected(self, cast):
+        """Adds the Gem's value to the robot and notifies the player of the Gem's collected via the message actor.
+
+        Called when the Gem hits the ground (in on_update), and is close enough to the robot to be collected.
+
+        Args:
+            cast (Cast): The current game's Cast of Actors.
+        """        
         robot = cast.get_first_actor("robot")
         message = cast.get_first_actor("message")
         robot.add_money(self._value)
@@ -29,6 +46,11 @@ class Gem(Actor):
             message.set_text(f"Hit by {self._name}! Ouch! (${self._value})")
 
     def on_update(self, cast):
+        """Makes the gem fall through the air, destroying itself if it reaches the ground.
+
+        Args:
+            cast (Cast): The current game's Cast of Actors.
+        """        
         robot = cast.get_first_actor("robot")
         if self._position.get_y() >= GlobalDefs.GROUND_Y:
             if self._check_robot_touching(robot):
@@ -36,18 +58,35 @@ class Gem(Actor):
             cast.remove_actor("gems", self)
     
     def get_name(self):
+        """Returns the user-friendly name of the Gem."""
         return self._name
 
     def get_value(self):
+        """Returns the monetary value of the Gem."""
         return self._value
 
     def set_fall_speed(self, speed):
+        """Sets the downward velocity of the Gem. Cannot be negative.
+        
+        Args:
+            speed: Speed in pixels to fall each frame.
+        """
         self._velocity = Point(0, abs(speed))
 
     def _check_robot_touching(self, robot):
+        """Checks the proximity of the Gem to the robot character and determines whether the Gem can be collected.
+        
+        Args:
+            robot (Robot): Actor representing the robot character.
+        """
         return abs(self._position.get_x() - (robot.get_position().get_x() + GlobalDefs.CELL_SIZE)) <= GlobalDefs.CELL_SIZE * 2
 
 class Opal(Gem):
+    """A special, supervaluable Gem that flashes many colors while falling.
+
+    Attributes:
+        _timer: Frames until the color of the Opal changes. Reset continuously after every color change.
+    """    
     COLOR_TIMER = 5
     COLORS =    [ColorDefs.WHITE, ColorDefs.RED, ColorDefs.LIME, ColorDefs.YELLOW, ColorDefs.CYAN, 
                 ColorDefs.TEAL, ColorDefs.ORANGE, ColorDefs.CORAL, ColorDefs.PERIDOT, ColorDefs.AQUAMARINE, 
@@ -67,6 +106,11 @@ class Opal(Gem):
         self._timer = Opal.COLOR_TIMER
 
 class Obsidian(Gem):
+    """A special, supervaluable Gem that flashes purple then turns invisible while falling.
+
+    Attributes:
+        _timer: Frames until the color of the Obsidian changes. Advances through the COLOR_FRAMES list.
+    """    
     COLORS       = [ColorDefs.PURPLE, ColorDefs.GREY, ColorDefs.BLACK]
     COLOR_FRAMES = [20, 10]
 
@@ -90,6 +134,7 @@ class Obsidian(Gem):
             self._timer = Obsidian.COLOR_FRAMES[self._timer_stage]
 
 class GemDefs:
+    """Definitions of various gems used by GemMaker."""
     # Treasure
     SILVER = Gem("Silver", "*", ColorDefs.SILVER, 500)
     GOLD = Gem("Gold", "*", ColorDefs.YELLOW, 1000)

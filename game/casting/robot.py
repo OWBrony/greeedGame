@@ -6,7 +6,13 @@ from game.shared.color import ColorDefs
 from game.shared.point import Point
 
 class Robot(Actor):
+    """The player character. Moves back and forth and stores the player's score.
+
+    Attributes:
+        _money: The money (i.e. score) of the player.
+    """
     def __init__(self):
+        """Construct a new Robot."""
         super().__init__()
         self._text = "#"
         self._font_size = GlobalDefs.FONT_SIZE * 2
@@ -17,7 +23,9 @@ class Robot(Actor):
         self._money = 0
 
     def get_money(self):
+        """Get the current money of the Robot."""
         return self._money
 
     def add_money(self, money):
+        """Add money to the robot. Can be negative."""
         self._money += money
