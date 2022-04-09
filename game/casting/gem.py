@@ -133,9 +133,31 @@ class Obsidian(Gem):
         if self._timer_stage < len(Obsidian.COLOR_FRAMES):
             self._timer = Obsidian.COLOR_FRAMES[self._timer_stage]
 
+class Mythril(Gem):
+    """A strange blue Gem that falls faster than other gems."""
+ 
+    COLORS       = [ColorDefs.BLUE]
+    COLOR_FRAMES = [20, 10]
+
+    def __init__(self):
+        super().__init__("Mythril", "*", Mythril.COLORS[0], 59999)
+        self._timer = Mythril.COLOR_FRAMES[0]
+
+    def set_fall_speed(self, speed):
+        """Sets the downward velocity of the Gem. Cannot be negative.
+        
+        Args:
+            speed: Speed in pixels to fall each frame.
+        """
+        "Sets speed to 8 regardless of speed passed in"
+        self._velocity = Point(0, abs(speed))
+        self._velocity = Point(0, 8 )
+
+
 class GemDefs:
     """Definitions of various gems used by GemMaker."""
     # Treasure
+    
     SILVER = Gem("Silver", "*", ColorDefs.SILVER, 500)
     GOLD = Gem("Gold", "*", ColorDefs.YELLOW, 1000)
     CORAL = Gem("Coral", "*", ColorDefs.CORAL, 1500)
@@ -151,8 +173,10 @@ class GemDefs:
     RUBY = Gem("Ruby", "*", ColorDefs.RED, 7500)
     EMERALD = Gem("Emerald", "*", ColorDefs.LIME, 8250)
     DIAMOND = Gem("Diamond", "*", ColorDefs.WHITE, 10000)
+    
     OPAL = Opal()
     OBSIDIAN = Obsidian()
+    MYTHRIL = Mythril()
     # Hazards
     PEBBLE = Gem("Pebble", "o", ColorDefs.GREY, -5000)
     GRAVEL = Gem("Gravel", "o", ColorDefs.SLATE, -10000)
